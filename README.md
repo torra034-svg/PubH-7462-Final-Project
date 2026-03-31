@@ -3,7 +3,7 @@
 
 1) Name(s) of team member(s)
 
-Benny Cox and Patrick Torralba
+Benny Cox, Emmy Paulson, and Patrick Torralba
 
 2) Product title
 
@@ -44,4 +44,4 @@ The main programming challenge is creating an interactive map, data-scrapping th
 
 10) Division of labor: How will your team collaborate to complete the project? Will each person be responsible for a particular set of features, or will team members work together on the entire codebase? If you are working alone this part will, of course, be trivial.
 
-Team members will collaborate on the coding process. Specifically, Patrick will code the mapping portion and Benny will scrape data from the internet for the R app. Then both individuals will work together to generate the R Shiny App.
+Team members will collaborate on the coding process. Specifically, Patrick will code the mapping portion, Benny will scrape data from the internet for geocaching purposes, and Emmy will work on integrating our progress into the Shiny app. As a team we will collaborate with one another when we are stuck.
