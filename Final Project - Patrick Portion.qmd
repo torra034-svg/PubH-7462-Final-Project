@@ -1,6 +1,123 @@
 ---
 title: "Final Project - Patrick Portion"
 author: "Patrick Torralba"
-format: html
+format:
+  html:
+    theme: flatly
+    code-fold: FALSE
+    code-tools: TRUE
+    code-copy: TRUE
+    toc: TRUE
+    toc-depth: 3
+    smooth-scroll: TRUE
+    embed-resources: TRUE
+    number-sections: TRUE
 editor: visual
 ---
+
+# Set-up
+
+## Library
+
+```{r}
+#| label: library
+#| message: false
+#| warning: false
+#| echo: true
+
+library(tidyverse)
+library(leaflet) ## interactive map
+library(sf) ## spatial data
+library(httr) ## get geocache data
+library(jsonlite) ## read geocache data
+library(shiny) ## create Shiny App
+  
+
+```
+
+# Import Geocache data
+
+```{r}
+#| label: import-geocache-data
+#| warning: false
+#| message: false
+#| echo: true
+
+
+## Define API Key
+consumer_key <- "RSSguaeJw6kvwgqdgA6G"
+
+## Define Minnesota's Bounding Box (Min Lat, Min Lon, Max Lat, Max Lon)
+# This covers the general rectangle of MN
+
+mn_bbox <- "43.5|-97.2|49.4|-89.5"
+
+## Build the URL to search for caches in that box
+search_url <- paste0(
+  "https://www.opencaching.us/okapi/services/caches/search/bbox?",
+  "bbox=", mn_bbox,
+  "&consumer_key=", consumer_key
+)
+
+## Get the list of Cache IDs (Waypoints)
+raw_search <- GET(search_url)
+cache_ids <- fromJSON(content(raw_search, "text"))$results
+
+## Obtain Details for IDs 
+ids_string <- paste(cache_ids[1:50], collapse = "|")
+
+detail_url <- paste0(
+  "https://www.opencaching.us/okapi/services/caches/geocaches?",
+  "cache_codes=", ids_string,
+  "&fields=name|location|type|status|difficulty|terrain",
+  "&consumer_key=", consumer_key
+)
+
+raw_details <- GET(detail_url)
+clean_data <- fromJSON(content(raw_details, "text"))
+
+## Convert the list into a nice Data Frame
+mn_caches <- bind_rows(clean_data) %>%
+  mutate(
+    lat = as.numeric(sub("\\|.*", "", location)),
+    lon = as.numeric(sub(".*\\|", "", location))
+  )
+```
+
+# Import data to Shiny
+
+```{r}
+#| label: import-to-shiny
+#| warning: false
+#| message: false
+#| echo: true
+
+
+ui <- fluidPage(
+  titlePanel("Minnesota Geocache Finder"),
+  leafletOutput("cacheMap", height = "800px")
+)
+
+server <- function(input, output) {
+  output$cacheMap <- renderLeaflet({
+    leaflet(mn_caches) %>%
+      addTiles() %>%  # Add the standard map background
+      addMarkers(
+        ~lon, ~lat, 
+        popup = ~paste("<b>", name, "</b><br>Type:", type, "<br>Difficulty:", difficulty)
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+## README
+
+Things that still need to be done
+
+-   Import more geocache data
+
+-   Add slider input in US so users can filter by difficulty and terrain
+
+-   Let user click a point on the map and have the app calculate the distance to the nearest 5 caches
