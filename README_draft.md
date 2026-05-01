@@ -1,0 +1,7 @@
+# PubH-7462-Final-Project
+
+The following changes were made to the planned product
+- introduced dark mode and light mode
+- user can locate 5 closest geocaches based on their distance
+- user can search for geocache's based on terrain difficulty and distance
+- user can zoom in and out in the shiny app
