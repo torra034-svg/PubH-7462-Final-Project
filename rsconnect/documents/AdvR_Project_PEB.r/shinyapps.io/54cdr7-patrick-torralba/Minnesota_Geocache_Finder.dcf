@@ -1,0 +1,12 @@
+name: Minnesota_Geocache_Finder
+title: Minnesota_Geocache_Finder
+username: 54cdr7-patrick-torralba
+account: 54cdr7-patrick-torralba
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17325715
+bundleId: 11969037
+url: https://54cdr7-patrick-torralba.shinyapps.io/Minnesota_Geocache_Finder/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

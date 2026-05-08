@@ -1,0 +1,12 @@
+name: PubH-7462-Final-Project
+title: PubH-7462-Final-Project
+username: 54cdr7-patrick-torralba
+account: 54cdr7-patrick-torralba
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17325704
+bundleId:
+url: https://54cdr7-patrick-torralba.shinyapps.io/PubH-7462-Final-Project/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
